@@ -12,6 +12,7 @@
         "darkaonline/l5-swagger": "^6.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
+        "laravel/passport": "^8.1",
         "laravel/tinker": "^2.0",
         "tijsverkoyen/css-to-inline-styles": "^2.2",
         "tymon/jwt-auth": "dev-develop"

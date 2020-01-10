@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\User;
 use Validator;
 use App\Notifications\SignupActivate;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 /**
  *  @OA\Info(
@@ -71,7 +73,6 @@ class AuthController extends Controller
      *  )
      *)
      */
-
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -86,12 +87,99 @@ class AuthController extends Controller
             'password' => bcrypt($request->password),
             'name' => '',
             'activation_token' => md5($request->email)
-        ]);        
-        
+        ]);
+
         $user->notify(new SignupActivate($user));
         return response()->json([
             'Usuario creado con exito'
         ], 201);
+    }
+
+    /**
+     * @OA\Post(
+     *      path="/api/auth/login",
+     *      tags={"AuthController"},
+     *      summary="Login de usuario",
+     *      operationId="login",
+     * 
+     *  @OA\Parameter(
+     *      name="email",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     *  ),    
+     *  @OA\Parameter(
+     *      name="password",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     *  ),   
+     *  @OA\Parameter(
+     *      name="remember_me",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="boolean"
+     *      )
+     *  ),    
+     *  @OA\Response(
+     *      response=201,
+     *      description="Usuario creado",
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *      )
+     *  ),
+     *  @OA\Response(
+     *      response=400,
+     *      description="Solicitud no válida"
+     *  ),
+     *  @OA\Response(
+     *      response=401,
+     *      description="No autorizado"
+     *  ),     
+     *  @OA\Response(
+     *      response=404,
+     *      description="No encontrado"
+     *  ),
+     *  @OA\Response(
+     *      response=422,
+     *      description="Error validación"
+     *  )
+     *)
+     */
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string',
+            'remember_me' => 'boolean'
+        ]);
+
+        $credentials = request(['email', 'password']);
+        if (!Auth::attempt($credentials)) {
+            return  response()->json([
+                'message' => 'No autorizado'
+            ], 401);
+        }
+        $user = $request->user();
+        $tokenResult = $user->createToken('Administrador');
+        $token = $tokenResult->token;
+
+        if ($request->remember_me) {
+            $token->expires_at = Carbon::now()->addWeek(1);
+        }
+
+        $token->save();
+
+        return response()->json([
+            'access_token' => $tokenResult->accessToken,
+            'token_type' => 'Bearer',
+            'expired_at' => Carbon::parse($tokenResult->token->expired_at)->toDateTimeString()
+        ]);
     }
 
     public function registerActivate($token)

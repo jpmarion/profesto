@@ -49,6 +49,61 @@
                     }
                 }
             }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "AuthController"
+                ],
+                "summary": "Login de usuario",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "remember_me",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Usuario creado",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud no válida"
+                    },
+                    "401": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    },
+                    "422": {
+                        "description": "Error validación"
+                    }
+                }
+            }
         }
     },
     "components": {
