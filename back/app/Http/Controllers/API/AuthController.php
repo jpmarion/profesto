@@ -33,7 +33,7 @@ class AuthController extends Controller
      *      path="/api/auth/register",
      *      tags={"AuthController"},
      *      summary="Registro de usuario",
-     *      operationId="login",
+     *      operationId="register",
      * 
      *  @OA\Parameter(
      *      name="email",

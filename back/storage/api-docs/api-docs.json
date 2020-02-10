@@ -12,7 +12,7 @@
                     "AuthController"
                 ],
                 "summary": "Registro de usuario",
-                "operationId": "login",
+                "operationId": "register",
                 "parameters": [
                     {
                         "name": "email",
