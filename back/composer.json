@@ -9,7 +9,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "cardumen/argentina-provincias-localidades": "1.1",
         "darkaonline/l5-swagger": "^6.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
