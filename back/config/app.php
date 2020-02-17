@@ -165,7 +165,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Cardumen\ArgentinaProvinciasLocalidades\ArgentinaProvinciasLocalidades::class,
         /*
          * Application Service Providers...
          */
