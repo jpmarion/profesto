@@ -43,7 +43,6 @@ class User extends Authenticatable
     ];
 
     /**
-     *
      * @OA\Schema(
      *     schema="User",
      *     title="User",
