@@ -15,19 +15,10 @@
                 "operationId": "register",
                 "parameters": [
                     {
-                        "name": "email",
+                        "name": "Register",
                         "in": "query",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                            "$ref": "#/components/schemas/RegisterRequest"
                         }
                     }
                 ],
@@ -59,27 +50,10 @@
                 "operationId": "login",
                 "parameters": [
                     {
-                        "name": "email",
+                        "name": "Login",
                         "in": "query",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "remember_me",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "boolean"
+                            "$ref": "#/components/schemas/LoginRequest"
                         }
                     }
                 ],
@@ -147,10 +121,14 @@
                 "summary": "Datos del usuario",
                 "operationId": "user",
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Usuario",
                         "content": {
-                            "application/json": {}
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
                         }
                     },
                     "400": {
@@ -175,6 +153,96 @@
         }
     },
     "components": {
+        "schemas": {
+            "LoginRequest": {
+                "title": "LoginRequest",
+                "description": "Login Request",
+                "properties": {
+                    "email": {
+                        "description": "Email del usuario",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "description": "Contraseña del usuario",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "remember_me": {
+                        "description": "Recordar conexión del usuario",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterRequest": {
+                "title": "RegisterRequest",
+                "description": "Register Request",
+                "properties": {
+                    "email": {
+                        "description": "Email del usuario",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "description": "Contraseña del usuario",
+                        "type": "string",
+                        "format": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User",
+                "description": "User representation",
+                "properties": {
+                    "id": {
+                        "description": "The user id",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Nombre del usuario",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email del usuario",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "email_verified_at": {
+                        "description": "Cuando el usuario verifica su email",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "active": {
+                        "description": "Si usuario se encuentra activo",
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "description": "Cuando el usuario fue creado",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Cuando el usuario fue modificado la última vez",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "description": "When user was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "email_alternativo": {
+                        "description": "Email alternativo del usuario",
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",

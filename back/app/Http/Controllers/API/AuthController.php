@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use App\User;
 use Validator;
@@ -34,23 +36,11 @@ class AuthController extends Controller
      *      tags={"AuthController"},
      *      summary="Registro de usuario",
      *      operationId="register",
-     * 
-     *  @OA\Parameter(
-     *      name="email",
-     *      in="query",
-     *      required=true,
-     *      @OA\Schema(
-     *          type="string"
-     *      )
-     *  ),    
-     *  @OA\Parameter(
-     *      name="password",
-     *      in="query",
-     *      required=true,
-     *      @OA\Schema(
-     *          type="string"
-     *      )
-     *  ),    
+     *      @OA\Parameter(
+     *          name="Register",
+     *          in="query",
+     *          @OA\JsonContent(ref="#/components/schemas/RegisterRequest"),
+     *      ),
      *  @OA\Response(
      *      response=201,
      *      description="Usuario creado",
@@ -72,15 +62,8 @@ class AuthController extends Controller
      *  )
      *)
      */
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
         $user = User::create([
             'email' => $request->email,
             'password' => bcrypt($request->password),
@@ -100,31 +83,11 @@ class AuthController extends Controller
      *      tags={"AuthController"},
      *      summary="Login de usuario",
      *      operationId="login",
-     * 
-     *  @OA\Parameter(
-     *      name="email",
-     *      in="query",
-     *      required=true,
-     *      @OA\Schema(
-     *          type="string"
-     *      )
-     *  ),    
-     *  @OA\Parameter(
-     *      name="password",
-     *      in="query",
-     *      required=true,
-     *      @OA\Schema(
-     *          type="string"
-     *      )
-     *  ),   
-     *  @OA\Parameter(
-     *      name="remember_me",
-     *      in="query",
-     *      required=true,
-     *      @OA\Schema(
-     *          type="boolean"
-     *      )
-     *  ),    
+     *      @OA\Parameter(
+     *          name="Login",
+     *          in="query",
+     *          @OA\JsonContent(ref="#/components/schemas/LoginRequest"),
+     *      ),
      *  @OA\Response(
      *      response=201,
      *      description="Usuario creado",
@@ -139,7 +102,7 @@ class AuthController extends Controller
      *  @OA\Response(
      *      response=401,
      *      description="No autorizado"
-     *  ),     
+     *  ),
      *  @OA\Response(
      *      response=404,
      *      description="No encontrado"
@@ -150,14 +113,8 @@ class AuthController extends Controller
      *  )
      *)
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string',
-            'remember_me' => 'boolean'
-        ]);
-
         $credentials = request(['email', 'password']);
         if (!Auth::attempt($credentials)) {
             return  response()->json([
@@ -188,7 +145,7 @@ class AuthController extends Controller
      *      summary="Logout de usuario",
      *      operationId="logout",
      *      security={{"bearerAuth":{}}},
-     *     
+     *
      *      @OA\Response(
      *          response=201,
      *          description="Usuario creado",
@@ -203,7 +160,7 @@ class AuthController extends Controller
      *      @OA\Response(
      *          response=401,
      *          description="No autorizado"
-     *      ),     
+     *      ),
      *      @OA\Response(
      *          response=404,
      *          description="No encontrado"
@@ -241,13 +198,11 @@ class AuthController extends Controller
      *      summary="Datos del usuario",
      *      operationId="user",
      *      security={{"bearerAuth":{}}},
-     *     
+     *
      *      @OA\Response(
-     *          response=201,
+     *          response=200,
      *          description="Usuario",
-     *          @OA\MediaType(
-     *              mediaType="application/json",
-     *          )
+     *          @OA\JsonContent(ref="#/components/schemas/User"),
      *      ),
      *      @OA\Response(
      *          response=400,
@@ -256,7 +211,7 @@ class AuthController extends Controller
      *      @OA\Response(
      *          response=401,
      *          description="No autorizado"
-     *      ),     
+     *      ),
      *      @OA\Response(
      *          response=404,
      *          description="No encontrado"
@@ -267,8 +222,8 @@ class AuthController extends Controller
      *      )
      *  )
      */
-    public function user(Request $request){
+    public function user(Request $request)
+    {
         return response()->json($request->user());
     }
-
 }
