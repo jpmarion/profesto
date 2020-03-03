@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteGroup;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,5 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('user', 'API\AuthController@user');
     });
 });
+
+Route::post('empleado', 'API\EmpleadoController@store')->middleware(['auth:api']);

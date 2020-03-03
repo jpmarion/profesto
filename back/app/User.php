@@ -42,6 +42,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function Empleados()
+    {
+        return $this->belongsToMany(Empleado::class, 'empleados_users');
+    }
+
     /**
      * @OA\Schema(
      *     schema="User",
@@ -55,7 +60,8 @@ class User extends Authenticatable
      *     @OA\Property(type="string", format="date-time", property="created_at", description="Cuando el usuario fue creado"),
      *     @OA\Property(type="string", format="date-time", property="updated_at", description="Cuando el usuario fue modificado la última vez"),
      *     @OA\Property(type="string", format="date-time", property="deleted_at", description="When user was last updated"),
-     *     @OA\Property(type="string", property="email_alternativo", format="email", description="Email alternativo del usuario")
+     *     @OA\Property(type="string", property="email_alternativo", format="email", description="Email alternativo del usuario"),
+     *     @OA\Property(ref="#/components/schemas/Empleado")
      * )
      *
      */

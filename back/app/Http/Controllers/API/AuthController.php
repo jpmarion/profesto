@@ -7,7 +7,6 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use App\User;
-use Validator;
 use App\Notifications\SignupActivate;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -74,7 +73,7 @@ class AuthController extends Controller
         $user->notify(new SignupActivate($user));
         return response()->json([
             'Usuario creado con exito'
-        ], 201);
+        ], 200);
     }
 
     /**

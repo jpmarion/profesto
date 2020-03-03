@@ -150,10 +150,91 @@
                     }
                 ]
             }
+        },
+        "/api/empleado": {
+            "post": {
+                "tags": [
+                    "EmpleadoController"
+                ],
+                "summary": "Cargar un empleado",
+                "operationId": "empleadoStore",
+                "parameters": [
+                    {
+                        "name": "Register",
+                        "in": "query",
+                        "schema": {
+                            "$ref": "#/components/schemas/EmpleadoStoreRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Empleado creado",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud no válida"
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    },
+                    "422": {
+                        "description": "Error validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
         "schemas": {
+            "Empleado": {
+                "title": "Empleado",
+                "description": "Representación del empleado",
+                "properties": {
+                    "id": {
+                        "description": "Id de empleado",
+                        "type": "integer"
+                    },
+                    "apellido": {
+                        "description": "Apellido del empleado",
+                        "type": "string"
+                    },
+                    "nombre": {
+                        "description": "nombre del empleado",
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object"
+            },
+            "EmpleadoStoreRequest": {
+                "title": "EmpleadoStoreRequest",
+                "description": "EmpleadosStore Request",
+                "properties": {
+                    "user_id": {
+                        "description": "Id del usuario",
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "description": "Nombre del empleado",
+                        "type": "string"
+                    },
+                    "apellido": {
+                        "description": "Apellido del empleado",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "LoginRequest": {
                 "title": "LoginRequest",
                 "description": "Login Request",
@@ -238,6 +319,9 @@
                         "description": "Email alternativo del usuario",
                         "type": "string",
                         "format": "email"
+                    },
+                    "": {
+                        "$ref": "#/components/schemas/Empleado"
                     }
                 },
                 "type": "object"

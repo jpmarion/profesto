@@ -4,10 +4,9 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-class AuthTest extends TestCase
+class EmpleadoTest extends TestCase
 {
     public function testLogin()
     {
@@ -25,7 +24,7 @@ class AuthTest extends TestCase
     /**
      * @depends testLogin
      */
-    public function testUser($token)
+    public function testEmpleadoStore($token)
     {
         $this->withoutExceptionHandling();
 
@@ -33,22 +32,16 @@ class AuthTest extends TestCase
         $access_token = $json->access_token;
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $access_token
-        ])->getJson('/api/auth/user');
-        $response->assertStatus(200);
-    }
+        ])->postJson(
+            '/api/empleado',
+            [
+                'user_id' => 1,
+                'nombre' => 'Juan Pablo',
+                'apellido' => 'Marión'
+            ]
+        );
 
-    /**
-     * @depends testLogin
-     */
-    public function testLogout($token)
-    {
-        $this->withoutExceptionHandling();
-
-        $json = json_decode($token);
-        $access_token = $json->access_token;
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $access_token
-        ])->getJson('/api/auth/logout');
-        $response->assertStatus(200);
+        $response
+            ->assertStatus(201);
     }
 }
