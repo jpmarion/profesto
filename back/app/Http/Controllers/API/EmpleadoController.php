@@ -111,4 +111,48 @@ class EmpleadoController extends Controller
     {
         //
     }
+
+    /**
+     * @OA\Get(
+     *      path="/api/empleado/showPorUsuario/{idUser}",
+     *      tags={"EmpleadoController"},
+     *      summary="Empleados de un usuario en particular",
+     *      operationId="empleadosPorUsuario",
+     *      security={{"bearerAuth":{}}},
+     *   @OA\Parameter(
+     *     name="idUser",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(type="integer")
+     *   ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Usuario creado",
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Solicitud no válida"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="No autorizado"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="No encontrado"
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Error validación"
+     *      )
+     *  )
+     */
+    public function showPorUsuario($id)
+    {
+        $empleados = User::find($id)->empleados;
+        return response()->json($empleados, 200);
+    }
 }

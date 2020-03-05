@@ -190,6 +190,50 @@
                     }
                 ]
             }
+        },
+        "/api/empleado/showPorUsuario/{idUser}": {
+            "get": {
+                "tags": [
+                    "EmpleadoController"
+                ],
+                "summary": "Empleados de un usuario en particular",
+                "operationId": "empleadosPorUsuario",
+                "parameters": [
+                    {
+                        "name": "idUser",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Usuario creado",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud no válida"
+                    },
+                    "401": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    },
+                    "422": {
+                        "description": "Error validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
