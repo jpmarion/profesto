@@ -63,4 +63,22 @@ class EmpleadoTest extends TestCase
         $response
             ->assertStatus(200);
     }
+
+    /**
+     * @depends testLogin
+     */
+    public function testEmpleadosIndex($token)
+    {
+        $this->withoutExceptionHandling();
+
+        $json = json_decode($token);
+        $access_token = $json->access_token;
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $access_token
+        ])->getJson(
+            '/api/empleado'
+        );
+
+        $response->assertStatus(200);
+    }
 }
