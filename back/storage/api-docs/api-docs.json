@@ -152,6 +152,73 @@
             }
         },
         "/api/empleado": {
+            "get": {
+                "tags": [
+                    "EmpleadoController"
+                ],
+                "summary": "Muestra todos los empleados",
+                "operationId": "empleadoIndex",
+                "responses": {
+                    "200": {
+                        "description": "Empleados",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud no válida"
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    },
+                    "422": {
+                        "description": "Error validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "EmpleadoController"
+                ],
+                "summary": "Modificar un empleado",
+                "operationId": "empleadoUpdate",
+                "parameters": [
+                    {
+                        "name": "EmpleadoUpdate",
+                        "in": "query",
+                        "schema": {
+                            "$ref": "#/components/schemas/EmpleadoUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Empleado modificado",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud no válida"
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    },
+                    "422": {
+                        "description": "Error validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "EmpleadoController"
@@ -170,6 +237,48 @@
                 "responses": {
                     "200": {
                         "description": "Empleado creado",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud no válida"
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    },
+                    "422": {
+                        "description": "Error validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/empleado/{id}": {
+            "get": {
+                "tags": [
+                    "EmpleadoController"
+                ],
+                "summary": "Buscar un empleado",
+                "operationId": "empleadoShow",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del empleado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Empleado",
                         "content": {
                             "application/json": {}
                         }
@@ -262,6 +371,10 @@
             },
             "EmpleadoStoreRequest": {
                 "title": "EmpleadoStoreRequest",
+                "description": "EmpleadosStore Request"
+            },
+            "EmpleadoUpdateRequest": {
+                "title": "EmpleadoUpdateRequest",
                 "description": "EmpleadosStore Request",
                 "properties": {
                     "user_id": {

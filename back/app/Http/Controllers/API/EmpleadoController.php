@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Empleado;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmpleadoStoreRequest;
+use App\Http\Requests\EmpleadoUpdateRequest;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -16,22 +17,50 @@ class EmpleadoController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Muestra todos los empleados
      *
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Get(
+     *      path="/api/empleado",
+     *      tags={"EmpleadoController"},
+     *      summary="Muestra todos los empleados",
+     *      operationId="empleadoIndex",
+     *      security={{"bearerAuth":{}}},
+     *  @OA\Response(
+     *      response=200,
+     *      description="Empleados",
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *      )
+     *  ),
+     *  @OA\Response(
+     *      response=400,
+     *      description="Solicitud no válida"
+     *  ),
+     *  @OA\Response(
+     *      response=404,
+     *      description="No encontrado"
+     *  ),
+     *  @OA\Response(
+     *      response=422,
+     *      description="Error validación"
+     *  )
+     *)
      */
     public function index()
     {
-        //
+        $empleados = Empleado::all();
+        return response()->json($empleados, 200);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crear el empleado
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param EmpleadoStoreRequest $request
      * @return \Illuminate\Http\Response
      */
-
     /**
      * @OA\Post(
      *      path="/api/empleado",
@@ -79,10 +108,41 @@ class EmpleadoController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *      path="/api/empleado/{id}",
+     *      tags={"EmpleadoController"},
+     *      summary="Buscar un empleado",
+     *      operationId="empleadoShow",
+     *      security={{"bearerAuth":{}}},
+     *   @OA\Parameter(
+     *     name="id",
+     *     description="Id del empleado",
+     *     required=true,
+     *     in="path",
+     *       @OA\Schema(
+     *       type="integer"
+     *     )
+     *   ),
+     *  @OA\Response(
+     *      response=200,
+     *      description="Empleado",
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *      )
+     *  ),
+     *  @OA\Response(
+     *      response=400,
+     *      description="Solicitud no válida"
+     *  ),
+     *  @OA\Response(
+     *      response=404,
+     *      description="No encontrado"
+     *  ),
+     *  @OA\Response(
+     *      response=422,
+     *      description="Error validación"
+     *  )
+     *)
      */
     public function show($id)
     {
@@ -90,19 +150,50 @@ class EmpleadoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza el empleado
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param EmpleadoUpdateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    /**
+     * @OA\Put(
+     *      path="/api/empleado",
+     *      tags={"EmpleadoController"},
+     *      summary="Modificar un empleado",
+     *      operationId="empleadoUpdate",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *          name="EmpleadoUpdate",
+     *          in="query",
+     *          @OA\JsonContent(ref="#/components/schemas/EmpleadoUpdateRequest"),
+     *      ),
+     *  @OA\Response(
+     *      response=200,
+     *      description="Empleado modificado",
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *      )
+     *  ),
+     *  @OA\Response(
+     *      response=400,
+     *      description="Solicitud no válida"
+     *  ),
+     *  @OA\Response(
+     *      response=404,
+     *      description="No encontrado"
+     *  ),
+     *  @OA\Response(
+     *      response=422,
+     *      description="Error validación"
+     *  )
+     *)
+     */
+    public function update(EmpleadoUpdateRequest $request)
     {
-        //
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina el empleado
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

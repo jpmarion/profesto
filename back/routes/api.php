@@ -28,5 +28,6 @@ Route::group(['prefix' => 'empleado'], function () {
     Route::group(['middleware' => ['auth:api']], function () {
         Route::post('', 'API\EmpleadoController@store');
         Route::get('showPorUsuario/{idUser}', 'API\EmpleadoController@showPorUsuario');
+        Route::get('', 'API\EmpleadoController@index');
     });
 });
