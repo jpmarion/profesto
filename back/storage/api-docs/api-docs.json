@@ -371,18 +371,33 @@
             },
             "EmpleadoStoreRequest": {
                 "title": "EmpleadoStoreRequest",
-                "description": "EmpleadosStore Request"
-            },
-            "EmpleadoUpdateRequest": {
-                "title": "EmpleadoUpdateRequest",
-                "description": "EmpleadosStore Request",
+                "description": "Empleados Store Request",
                 "properties": {
                     "user_id": {
                         "description": "Id del usuario",
                         "type": "integer"
                     },
                     "nombre": {
-                        "description": "Nombre del empleado",
+                        "description": "nombre del empleado",
+                        "type": "string"
+                    },
+                    "apellido": {
+                        "description": "Apellido del empleado",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "EmpleadoUpdateRequest": {
+                "title": "EmpleadoUpdateRequest",
+                "description": "Empleados Update Request",
+                "properties": {
+                    "id": {
+                        "description": "Id del empleado",
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "description": "nombre del empleado",
                         "type": "string"
                     },
                     "apellido": {

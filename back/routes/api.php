@@ -29,5 +29,7 @@ Route::group(['prefix' => 'empleado'], function () {
         Route::post('', 'API\EmpleadoController@store');
         Route::get('showPorUsuario/{idUser}', 'API\EmpleadoController@showPorUsuario');
         Route::get('', 'API\EmpleadoController@index');
+        Route::put('', 'API\EmpleadoController@update');
+        Route::get('/{id}','API\EmpleadoController@show');
     });
 });

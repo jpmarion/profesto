@@ -31,13 +31,12 @@ class EmpleadoUpdateRequest extends FormRequest
     }
 
     /**
-     *
      * @OA\Schema(
      *     schema="EmpleadoUpdateRequest",
      *     title="EmpleadoUpdateRequest",
-     *     description="EmpleadosStore Request",
-     *     @OA\Property(type="integer", property="user_id", description="Id del usuario"),
-     *     @OA\Property(type="string", property="nombre", description="Nombre del empleado"),
+     *     description="Empleados Update Request",
+     *     @OA\Property(type="integer", property="id", description="Id del empleado"),
+     *     @OA\Property(type="string", property="nombre", description="nombre del empleado"),
      *     @OA\Property(type="string", property="apellido", description="Apellido del empleado"),
      * )
      */

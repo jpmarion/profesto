@@ -35,12 +35,10 @@ class EmpleadoStoreRequest extends FormRequest
      * @OA\Schema(
      *     schema="EmpleadoStoreRequest",
      *     title="EmpleadoStoreRequest",
-     *     description="EmpleadosStore Request",
-     *      @OA\Parameter(
-     *          name="Update",
-     *          in="query",
-     *          @OA\JsonContent(ref="#/components/schemas/Empleado"),
-     *      ),
+     *     description="Empleados Store Request",
+     *     @OA\Property(type="integer", property="user_id", description="Id del usuario"),
+     *     @OA\Property(type="string", property="nombre", description="nombre del empleado"),
+     *     @OA\Property(type="string", property="apellido", description="Apellido del empleado")
      * )
      */
 }

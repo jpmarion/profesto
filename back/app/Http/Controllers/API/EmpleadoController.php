@@ -146,7 +146,8 @@ class EmpleadoController extends Controller
      */
     public function show($id)
     {
-        //
+        $empleado = Empleado::find($id);
+        return response()->json($empleado, 200);
     }
 
     /**
@@ -190,6 +191,11 @@ class EmpleadoController extends Controller
      */
     public function update(EmpleadoUpdateRequest $request)
     {
+        $empleado = Empleado::find($request->id);
+        $empleado->nombre = $request->nombre;
+        $empleado->apellido = $request->apellido;
+        $empleado->save();
+        return response()->json('Empleado modificado', 200);
     }
 
     /**
