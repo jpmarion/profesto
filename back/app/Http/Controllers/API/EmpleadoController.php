@@ -204,9 +204,47 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @OA\Delete(
+     *      path="/api/empleado/{id}",
+     *      tags={"EmpleadoController"},
+     *      summary="Eliminar un empleado",
+     *      operationId="empleadoDestroy",
+     *      security={{"bearerAuth":{}}},
+     *   @OA\Parameter(
+     *     name="id",
+     *     description="Id del empleado",
+     *     required=true,
+     *     in="path",
+     *       @OA\Schema(
+     *       type="integer"
+     *     )
+     *   ),
+     *  @OA\Response(
+     *      response=200,
+     *      description="Empleado",
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *      )
+     *  ),
+     *  @OA\Response(
+     *      response=400,
+     *      description="Solicitud no válida"
+     *  ),
+     *  @OA\Response(
+     *      response=404,
+     *      description="No encontrado"
+     *  ),
+     *  @OA\Response(
+     *      response=422,
+     *      description="Error validación"
+     *  )
+     *)
+     */
     public function destroy($id)
     {
-        //
+        $empleado = Empleado::destroy($id);
+        return response()->json('Empleado eliminado', 200);
     }
 
     /**
