@@ -2,12 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
 
 class EmpleadoTest extends TestCase
 {
+    use WithFaker;
+
     public function testLogin()
     {
         $data = [
@@ -30,19 +31,20 @@ class EmpleadoTest extends TestCase
 
         $json = json_decode($token);
         $access_token = $json->access_token;
+
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $access_token
         ])->postJson(
             '/api/empleado',
             [
                 'user_id' => 1,
-                'nombre' => 'Juan Pablo',
-                'apellido' => 'Marión'
+                'nombre' => $this->faker->firstName,
+                'apellido' => $this->faker->lastName
             ]
         );
 
-        $response
-            ->assertStatus(201);
+        $idPersona = $response->assertStatus(200);
+        return $idPersona;
     }
 
     /**
@@ -78,7 +80,51 @@ class EmpleadoTest extends TestCase
         ])->getJson(
             '/api/empleado'
         );
+        $response->assertStatus(200);
+    }
 
+    /**
+     * @depends testLogin
+     * @depends testEmpleadoStore
+     */
+    public function testShow($token)
+    {
+        // $this->withoutExceptionHandling();
+
+        $json = json_decode($token);
+        $access_token = $json->access_token;
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $access_token
+        ])->getJson(
+            '/api/empleado/1'
+        );
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @depends testLogin
+     * @depends testEmpleadoStore
+     */
+    public function testUpdate($token, $idPersona)
+    {
+        // $this->withoutExceptionHandling();
+
+        $json = json_decode($token);
+        $access_token = $json->access_token;
+        $json = json_decode($idPersona->getContent());
+        $id = $json->id;
+
+        $data =  [
+            'id' => $id,
+            'nombre' => $this->faker->firstName,
+            'apellido' => $this->faker->lastName
+        ];
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $access_token
+        ])->putJson(
+            '/api/empleado',
+            $data
+        );
         $response->assertStatus(200);
     }
 }

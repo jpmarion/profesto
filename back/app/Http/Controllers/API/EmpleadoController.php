@@ -103,8 +103,8 @@ class EmpleadoController extends Controller
         $user = User::find($request->user_id);
         $user->Empleados()->save($empleado);
         return response()->json([
-            'Empleado creado con exito'
-        ], 201);
+            'id' => $empleado->id,
+        ]);
     }
 
     /**
