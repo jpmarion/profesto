@@ -1,1 +1,23 @@
-<p>login works!</p>
+<mat-grid-list cols="2" rowHeight="2:1">
+  <mat-grid-tile>Logo</mat-grid-tile>
+  <mat-grid-tile>
+    <form [formGroup]="login" (ngSubmit)="onSubmit()" >
+      <mat-card-content>
+        <mat-form-field appearance="fill">
+          <mat-label>Usuario</mat-label>
+          <input type="text" matInput name="" id="" formControlName="usuario">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Contraseña</mat-label>
+          <input type="password" matInput name="" id="" formControlName="contrasenia">
+        </mat-form-field>
+        <section class="section-check">
+          <mat-checkbox>Recordar</mat-checkbox>
+        </section>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary">Iniciar sesión</button>
+      </mat-card-actions>
+    </form>
+  </mat-grid-tile>
+</mat-grid-list>
