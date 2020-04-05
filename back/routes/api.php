@@ -15,8 +15,8 @@ use Illuminate\Routing\RouteGroup;
 */
 
 Route::group(['prefix' => 'auth'], function () {
-    Route::post('register', 'API\AuthController@register');
     Route::post('login', 'API\AuthController@login');
+    Route::post('register', 'API\AuthController@register');
     Route::get('signup/activate/{token}', 'API\AuthController@registerActivate');
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('logout', 'API\AuthController@logout');
