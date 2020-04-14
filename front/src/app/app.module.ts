@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './pages/auth/auth.module';
 import { HomeModule } from './pages/home/home.module';
 import { LayoutModule } from './layout/layout.module';
+import { HhtpHandleErrorService } from './pages/shared/_services/hhtp-handle-error.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,10 @@ import { LayoutModule } from './layout/layout.module';
     HttpClientModule,
     LayoutModule
   ],
-  providers: [Title],
+  providers: [
+    Title,
+    HhtpHandleErrorService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
