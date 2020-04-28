@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthService } from '../_services/auth.service';
+
 import { Router } from '@angular/router';
 import { User } from '../user';
 import { RequestLogin } from '../request-login';
+
+import { OkDialogComponent } from '../../shared/dialog/ok-dialog/ok-dialog.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -16,16 +20,21 @@ export class LoginComponent implements OnInit {
   user: User = new User();
   error: any;
   requestLogin = new RequestLogin();
+  errorLogin: boolean;
 
   login = new FormGroup({
-    usuario: new FormControl(''),
-    password: new FormControl(''),
+    usuario: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
     remember_me: new FormControl('')
   });
 
-  constructor(private authServices: AuthService, private router: Router) { }
+  constructor(
+    private authServices: AuthService,
+    private router: Router,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.errorLogin = false;
   }
 
   onSubmit() {
@@ -41,15 +50,41 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['home']);
         },
         (response) => {
-          if (response.status === 422) {
-            Object.keys(response.error).map((err) => {
-              this.error = `${response.error[err]}`;
-            })
-          } else {
-            this.error = response.error;
+          switch (response.status) {
+            case 422:
+              Object.keys(response.error).map((err) => {
+                this.error = `${response.error[err]}`;
+              })
+              break;
+            case 401:
+              this.errorLogin = true;
+              break;
+            default:
+              this.error = response.error;
+              break;
           }
         }
       )
   }
 
+  openOkDialog(titulo: string, mensaje: string): void {
+    const dialogRef = this.dialog.open(OkDialogComponent, {
+      data: { titulo: titulo, mensaje: mensaje }
+    })
+  }
+
+  getMensajeError() {
+    if (this.login.get('usuario').hasError) {
+      if (this.login.get('usuario').hasError('required')) {
+        return 'Debe ingresar un valor';
+      }
+      return this.login.get('usuario').hasError('email') ? 'Email no valido' : '';
+    }
+
+    if (this.login.get('password').hasError) {
+      if (this.login.get('password').hasError('required')) {
+        return 'Debe ingresar un valor';
+      }
+    }
+  }
 }

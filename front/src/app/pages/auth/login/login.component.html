@@ -1,18 +1,21 @@
 <mat-grid-list cols="2" rowHeight="2:1">
   <mat-grid-tile>Logo</mat-grid-tile>
   <mat-grid-tile>
-    <form [formGroup]="login" (ngSubmit)="onSubmit()" >
+    <form [formGroup]="login" (ngSubmit)="onSubmit()">
+      <mat-error *ngIf="this.errorLogin">Usuario o contraseña erronea</mat-error>
       <mat-card-content>
         <mat-form-field appearance="fill">
           <mat-label>Usuario</mat-label>
           <input type="text" matInput name="" id="" formControlName="usuario">
+          <mat-error *ngIf="this.login.get('usuario').invalid">{{getMensajeError()}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Contraseña</mat-label>
           <input type="password" matInput name="" id="" formControlName="password">
+          <mat-error *ngIf="this.login.get('password').invalid">{{getMensajeError()}}</mat-error>
         </mat-form-field>
         <section class="section-check">
-          <mat-checkbox formControlName="remember_me" >Recordar</mat-checkbox>
+          <mat-checkbox formControlName="remember_me">Recordar</mat-checkbox>
         </section>
       </mat-card-content>
       <mat-card-actions>

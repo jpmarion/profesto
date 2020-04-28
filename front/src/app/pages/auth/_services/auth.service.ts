@@ -36,7 +36,7 @@ export class AuthService {
         remember_me: requestLogin.remember_me
       });
 
-      // console.warn(request);
+    // console.warn(request);
 
     return this.http.post(this.loginUrl, request, httpOptions)
       .pipe(
@@ -70,6 +70,14 @@ export class AuthService {
           }
         )
       )
+  }
+
+  isAuthenticated(): boolean {
+    const token: string = this.getToken();
+    if (token) {
+      return true;
+    }
+    return false
   }
 
   private handleError(error: HttpErrorResponse) {
