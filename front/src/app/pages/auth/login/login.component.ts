@@ -73,18 +73,19 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  getMensajeError() {
+  getMensajeErrorUsuario() {
     if (this.login.get('usuario').hasError) {
       if (this.login.get('usuario').hasError('required')) {
-        return 'Debe ingresar un valor';
+        return 'FORMLOGIN.errorUsuarioRequired';
       }
-      return this.login.get('usuario').hasError('email') ? 'Email no valido' : '';
-    }
-
-    if (this.login.get('password').hasError) {
-      if (this.login.get('password').hasError('required')) {
-        return 'Debe ingresar un valor';
-      }
+      return this.login.get('usuario').hasError('email') ? 'FORMLOGIN.errorUsuarioEmail' : '';
     }
   }
+
+  getMensajeErrorPassword() {
+    if (this.login.get('password').hasError) {
+      return this.login.get('password').hasError('required') ? 'FORMLOGIN.errorPasswordRequired' : '';
+    }
+  }
+
 }

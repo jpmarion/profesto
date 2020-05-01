@@ -1,0 +1,11 @@
+{
+  "FORMLOGIN": {
+    "lblusuario": "Usuario",
+    "errorLogin": "Usuario o contraseña erronea",
+    "errorUsuarioRequired": "Debe ingresar un valor",
+    "errorUsuarioEmail": "Email no valido",
+    "errorPasswordRequired": "Debe ingresar un valor",
+    "chkRememberMe": "Recordar",
+    "btnIniciarSesion": "Iniciar sesión"
+  }
+}

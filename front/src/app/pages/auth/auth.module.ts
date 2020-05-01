@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -25,7 +26,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatCardModule,
     MatGridListModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ]
 })
 export class AuthModule { }

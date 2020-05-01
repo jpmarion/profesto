@@ -2,24 +2,24 @@
   <mat-grid-tile>Logo</mat-grid-tile>
   <mat-grid-tile>
     <form [formGroup]="login" (ngSubmit)="onSubmit()">
-      <mat-error *ngIf="this.errorLogin">Usuario o contraseña erronea</mat-error>
+      <mat-error *ngIf="this.errorLogin">{{ 'FORMLOGIN.errorLogin' | translate }}</mat-error>
       <mat-card-content>
         <mat-form-field appearance="fill">
-          <mat-label>Usuario</mat-label>
+          <mat-label>{{ 'FORMLOGIN.lblusuario' | translate }}</mat-label>
           <input type="text" matInput name="" id="" formControlName="usuario">
-          <mat-error *ngIf="this.login.get('usuario').invalid">{{getMensajeError()}}</mat-error>
+          <mat-error *ngIf="this.login.get('usuario').invalid">{{ getMensajeErrorUsuario() | translate }}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Contraseña</mat-label>
           <input type="password" matInput name="" id="" formControlName="password">
-          <mat-error *ngIf="this.login.get('password').invalid">{{getMensajeError()}}</mat-error>
+          <mat-error *ngIf="this.login.get('password').invalid">{{ getMensajeErrorPassword() | translate }}</mat-error>
         </mat-form-field>
         <section class="section-check">
-          <mat-checkbox formControlName="remember_me">Recordar</mat-checkbox>
+          <mat-checkbox formControlName="remember_me">{{ 'FORMLOGIN.chkRememberMe' | translate }}</mat-checkbox>
         </section>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary">Iniciar sesión</button>
+        <button mat-raised-button color="primary">{{ 'FORMLOGIN.btnIniciarSesion' | translate }}</button>
       </mat-card-actions>
     </form>
   </mat-grid-tile>
