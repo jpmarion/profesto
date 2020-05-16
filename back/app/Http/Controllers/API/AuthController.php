@@ -10,6 +10,7 @@ use App\User;
 use App\Notifications\SignupActivate;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\Client;
 
 /**
  *  @OA\Info(
@@ -71,6 +72,18 @@ class AuthController extends Controller
         ]);
 
         $user->notify(new SignupActivate($user));
+
+        $client = Client::where('password_client', 1)->first();
+
+        $request->request->add([
+            'grant_type'    => 'password',
+            'client_id'     => $client->id,
+            'client_secret' => $client->secret,
+            'username'      => $request->email,
+            'password'      => $request->password,
+            'scope'         => null,
+        ]);
+
         return response()->json([
             'Usuario creado con exito'
         ], 200);
