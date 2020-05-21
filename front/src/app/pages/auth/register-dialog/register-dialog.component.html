@@ -1,0 +1,18 @@
+<form [formGroup]="register" (ngSubmit)="onSubmit()">
+  <mat-error *ngIf="this.errorRegister">{{ 'FORMREGISTER.errorLogin' | translate }}</mat-error>
+  <mat-card-content>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMREGISTER.lblusuario' | translate }}</mat-label>
+      <input type="text" matInput name="" id="" formControlName="usuario">
+      <mat-error *ngIf="this.register.get('usuario').invalid">{{ getMensajeErrorUsuario() | translate }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMREGISTER.lblContrasenia' | translate }}</mat-label>
+      <input type="password" matInput name="" id="" formControlName="password">
+      <mat-error *ngIf="this.register.get('password').invalid">{{ getMensajeErrorPassword() | translate }}</mat-error>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" [class.spinner]="loading" [disabled]="loading">{{ 'FORMREGISTER.btnRegistrate' | translate }}</button>
+  </mat-card-actions>
+</form>

@@ -4,8 +4,22 @@
     "errorLogin": "Usuario o contraseña erronea",
     "errorUsuarioRequired": "Debe ingresar un valor",
     "errorUsuarioEmail": "Email no valido",
+    "lblContrasenia": "Contraseña",
     "errorPasswordRequired": "Debe ingresar un valor",
     "chkRememberMe": "Recordar",
-    "btnIniciarSesion": "Iniciar sesión"
+    "btnIniciarSesion": "Iniciar sesión",
+    "btnRegistrar": "Registrate"
+  },
+  "FORMREGISTER": {
+    "titulo": "Crear cuenta",
+    "lblusuario": "Usuario",
+    "errorLogin": "Usuario existente",
+    "errorUsuarioRequired": "Debe ingresar un valor",
+    "errorUsuarioEmail": "Email no valido",
+    "lblContrasenia": "Contraseña",
+    "errorPasswordRequired": "Debe ingresar un valor",
+    "btnRegistrate": "Registrarte",
+    "tituloDialogOk": "Usuario creado con exito",
+    "mensajeDialogOk": "Confirmar e-mail de registro"
   }
 }

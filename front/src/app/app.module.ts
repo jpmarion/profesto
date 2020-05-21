@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './pages/auth/auth.module';
 import { HomeModule } from './pages/home/home.module';
 import { LayoutModule } from './layout/layout.module';
+import { DialogModule } from './pages/shared/dialog/dialog.module';
 import { HhtpHandleErrorService } from './pages/shared/_services/hhtp-handle-error.service';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -35,6 +36,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     HttpClientModule,
     LayoutModule,
+    DialogModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -8,7 +8,8 @@ import { User } from '../user';
 import { RequestLogin } from '../request-login';
 
 import { OkDialogComponent } from '../../shared/dialog/ok-dialog/ok-dialog.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { RegisterDialogComponent } from '../register-dialog/register-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -86,6 +87,14 @@ export class LoginComponent implements OnInit {
     if (this.login.get('password').hasError) {
       return this.login.get('password').hasError('required') ? 'FORMLOGIN.errorPasswordRequired' : '';
     }
+  }
+
+  openRegisterDialog() {
+    const dialogRef = this.dialog.open(RegisterDialogComponent);
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        console.log(result);
+      });
   }
 
 }

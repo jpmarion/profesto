@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from './../../../../environments/environment';
 import { User } from './../user';
 import { RequestLogin } from './../request-login';
+import { RequestRegister } from '../request-register';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,12 +24,13 @@ export class AuthService {
   public currentUser: User;
   private readonly apiUrl = environment.apiURL;
   private loginUrl = this.apiUrl + '/api/auth/login';
+  private registerUrl = this.apiUrl + '/api/auth/register';
 
   constructor(
     private http: HttpClient,
     private router: Router) { }
 
-  onLogin(requestLogin: RequestLogin): Observable<User> {
+  onLogin(requestLogin: RequestLogin): Observable<any> {
     const request = JSON.stringify(
       {
         email: requestLogin.email,
@@ -51,6 +53,23 @@ export class AuthService {
         catchError(error => this.handleError(error))
       );
 
+  }
+
+  onRigster(requestRegister: RequestRegister): Observable<any> {
+    const request = JSON.stringify({
+      email: requestRegister.email,
+      password: requestRegister.password
+    });
+
+    return this.http.post(this.registerUrl, request, httpOptions);
+    // return this.http.post<any>(this.registerUrl, request, httpOptions)
+    //   .pipe(
+    //     map((response: Response) => {
+    //       return response;
+    //     }),
+    //     catchError(error => this.handleError(error)
+    //     )
+    //   );
   }
 
   setToken(token: string): void {

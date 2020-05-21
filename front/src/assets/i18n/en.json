@@ -4,8 +4,22 @@
     "errorLogin": "Wrong username or password",
     "errorUsuarioRequired": "You must enter a value",
     "errorUsuarioEmail": "Invalid email",
+    "lblContrasenia":"Password",
     "errorPasswordRequired": "You must enter a value",
     "chkRememberMe": "Remember",
-    "btnIniciarSesion": "Log in"
+    "btnIniciarSesion": "Log in",
+    "btnRegistrar": "Sign up"
+  },
+  "FORMREGISTER": {
+    "titulo": "Create Account",
+    "lblusuario": "User",
+    "errorLogin": "Wrong username or password",
+    "errorUsuarioRequired": "You must enter a value",
+    "errorUsuarioEmail": "Invalid email",
+    "lblContrasenia":"Password",
+    "errorPasswordRequired": "You must enter a value",
+    "btnRegistrate": "Sign up",
+    "tituloDialogOk": "User created successfully",
+    "mensajeDialogOk": "Confirm registration email"
   }
 }
