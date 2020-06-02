@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
 
     this.requestLogin.email = this.login.get('usuario').value;
     this.requestLogin.password = this.login.get('password').value;
-    this.requestLogin.remember_me = this.login.get('remember_me').value;
+    this.requestLogin.remember_me = (this.login.get('remember_me').value === "" ? this.login.get('remember_me').value : false);
 
     this.authServices.onLogin(this.requestLogin)
       .subscribe(

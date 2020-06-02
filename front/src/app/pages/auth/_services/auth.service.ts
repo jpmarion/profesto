@@ -25,6 +25,8 @@ export class AuthService {
   private readonly apiUrl = environment.apiURL;
   private loginUrl = this.apiUrl + '/api/auth/login';
   private registerUrl = this.apiUrl + '/api/auth/register';
+  private logoutUrl = this.apiUrl + '/api/auth/logout';
+  private userUrl = this.apiUrl + '/api/auth/user';
 
   constructor(
     private http: HttpClient,
@@ -38,8 +40,6 @@ export class AuthService {
         remember_me: requestLogin.remember_me
       });
 
-    // console.warn(request);
-
     return this.http.post(this.loginUrl, request, httpOptions)
       .pipe(
         map((response: User) => {
@@ -52,7 +52,6 @@ export class AuthService {
         }),
         catchError(error => this.handleError(error))
       );
-
   }
 
   onRigster(requestRegister: RequestRegister): Observable<any> {
@@ -62,14 +61,16 @@ export class AuthService {
     });
 
     return this.http.post(this.registerUrl, request, httpOptions);
-    // return this.http.post<any>(this.registerUrl, request, httpOptions)
-    //   .pipe(
-    //     map((response: Response) => {
-    //       return response;
-    //     }),
-    //     catchError(error => this.handleError(error)
-    //     )
-    //   );
+  }
+
+  onLogout(): Observable<any> {
+    return this.http.post(this.logoutUrl, httpOptions)
+      .pipe(
+        tap(() => {
+          localStorage.removeItem('token');
+          this.router.navigate(['/']);
+        })
+      );
   }
 
   setToken(token: string): void {
@@ -81,7 +82,7 @@ export class AuthService {
   }
 
   getUser(): Observable<User> {
-    return this.http.get(this.apiUrl + '/api/auth/user')
+    return this.http.get(this.userUrl, httpOptions)
       .pipe(
         tap(
           (user: User) => {

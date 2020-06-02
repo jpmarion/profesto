@@ -4,7 +4,7 @@
     "errorLogin": "Wrong username or password",
     "errorUsuarioRequired": "You must enter a value",
     "errorUsuarioEmail": "Invalid email",
-    "lblContrasenia":"Password",
+    "lblContrasenia": "Password",
     "errorPasswordRequired": "You must enter a value",
     "chkRememberMe": "Remember",
     "btnIniciarSesion": "Log in",
@@ -16,10 +16,18 @@
     "errorLogin": "Wrong username or password",
     "errorUsuarioRequired": "You must enter a value",
     "errorUsuarioEmail": "Invalid email",
-    "lblContrasenia":"Password",
+    "lblContrasenia": "Password",
     "errorPasswordRequired": "You must enter a value",
     "btnRegistrate": "Sign up",
     "tituloDialogOk": "User created successfully",
     "mensajeDialogOk": "Confirm registration email"
+  },
+  "LOGOUT": {
+    "tituloDialogYesNo": "Exit application",
+    "mensajeDialogYesNo": "Do you want to exit the application?"
+  },
+  "DIALOGYESNO": {
+    "confirmado": "Yes",
+    "cerraDialogo": "No"
   }
 }

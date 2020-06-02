@@ -2,17 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { OkDialogComponent } from './ok-dialog/ok-dialog.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+import { OkDialogComponent } from './ok-dialog/ok-dialog.component';
+import { YesNoDialogComponent } from './yes-no-dialog/yes-no-dialog.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
 @NgModule({
-  declarations: [OkDialogComponent],
+  declarations: [OkDialogComponent, YesNoDialogComponent],
   imports: [
     CommonModule,
     MatDialogModule,
@@ -25,7 +26,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  exports: [OkDialogComponent],
+  exports: [OkDialogComponent, YesNoDialogComponent],
   entryComponents: [],
   providers: []
 })

@@ -21,5 +21,13 @@
     "btnRegistrate": "Registrarte",
     "tituloDialogOk": "Usuario creado con exito",
     "mensajeDialogOk": "Confirmar e-mail de registro"
+  },
+  "LOGOUT": {
+    "tituloDialogYesNo": "Salir de la aplicación",
+    "mensajeDialogYesNo": "¿Desea salir de la aplicación?"
+  },
+  "DIALOGYESNO": {
+    "confirmado": "Si",
+    "cerraDialogo": "No"
   }
 }

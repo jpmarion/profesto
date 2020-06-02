@@ -80,7 +80,7 @@ class AuthController extends Controller
             'client_id'     => $client->id,
             'client_secret' => $client->secret,
             'username'      => $request->email,
-            'password'      => $request->password,
+            'password'      => bcrypt($request->password),
             'scope'         => null,
         ]);
 
