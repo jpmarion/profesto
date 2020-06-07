@@ -10,6 +10,7 @@ export class AppComponent {
   title = 'Profesto';
 
   constructor(private translate: TranslateService) {
+    translate.addLangs(['es','en'])
     translate.setDefaultLang('es');
     translate.use('es');
   }

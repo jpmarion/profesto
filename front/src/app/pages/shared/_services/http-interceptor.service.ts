@@ -1,18 +1,19 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
-  HttpEvent, HttpHeaders, HttpInterceptor, HttpHandler, HttpRequest,
+  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest,
   HttpErrorResponse, HttpResponse
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../auth/_services/auth.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HttpInterceptorService {
+export class HttpInterceptorService implements HttpInterceptor {
 
   constructor(
     public auth: AuthService,
@@ -30,22 +31,22 @@ export class HttpInterceptorService {
       return next.handle(authReq).pipe(
         tap((event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
-            console.log('TAP function', event);
-          } (err: any) => {
-            console.log(err);
-            if (err instanceof HttpErrorResponse) {
-              if (err.status === 401) {
-                localStorage.removeItem('token');
-                this.router.navigate(['/']);
-              } else {
-                console.log('intercepor without changes');
-                return next.handle(req);
-              }
+            console.log('TAP funcion', event);
+          }
+        }, (err: any) => {
+          console.log(err);
+          if (err instanceof HttpErrorResponse) {
+            if (err.status === 401) {
+              localStorage.removeItem('token');
+              this.router.navigate(['/']);
             }
           }
         }
         )
-      )
+      );
+    } else {
+      console.log('interceptor without changes');
+      return next.handle(req);
     }
   }
 }
