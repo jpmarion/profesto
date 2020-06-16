@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest,
-  HttpErrorResponse, HttpResponse
+  HttpEvent, HttpInterceptor, HttpHandler,
+  HttpErrorResponse, HttpResponse, HttpRequest
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../auth/_services/auth.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +23,16 @@ export class HttpInterceptorService implements HttpInterceptor {
     console.log('interceptor running');
     const authToken = this.auth.getToken();
     if (authToken) {
-      const authReq = req.clone(
-        { headers: req.headers.set('Authorization', `Bearer ${authToken}`) }
-      );
+      // const authReq = req.clone(
+      //   { headers: req.headers.set('Authorization', `Bearer ${authToken}`) }
+      // );
+
+      const authReq =req.clone({
+        setHeaders:{
+          Authorization: `Bearer ${authToken}`
+        }
+      });
+      // const authReq = req.clone({ setHeaders: { Authorization: authToken } });
       console.log('interceptor running with new headers');
       return next.handle(authReq).pipe(
         tap((event: HttpEvent<any>) => {
