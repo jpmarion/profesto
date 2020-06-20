@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   HttpEvent, HttpInterceptor, HttpHandler,
-  HttpErrorResponse, HttpResponse, HttpRequest
+  HttpErrorResponse, HttpResponse, HttpRequest, HttpHeaders
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -24,20 +24,26 @@ export class HttpInterceptorService implements HttpInterceptor {
     const authToken = this.auth.getToken();
     if (authToken) {
       // const authReq = req.clone(
-      //   { headers: req.headers.set('Authorization', `Bearer ${authToken}`) }
+      //   {
+      //     headers: new HttpHeaders({
+      //       'Content-Type': 'application/json',
+      //       'X-Requested-With': 'XMLHttpRequest',
+      //       'Authorization': `Bearer ${authToken}`
+      //     })
+      //   }
       // );
 
-      const authReq =req.clone({
-        setHeaders:{
-          Authorization: `Bearer ${authToken}`
-        }
-      });
-      // const authReq = req.clone({ setHeaders: { Authorization: authToken } });
+      const authReq = req.clone(
+        { headers: req.headers.set('Authorization', `Bearer ${authToken}`)}
+      );
+
       console.log('interceptor running with new headers');
       return next.handle(authReq).pipe(
         tap((event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
-            console.log('TAP funcion', event);
+            // Response wiht HttpResponse type
+            console.log('TAP function', event);
+
           }
         }, (err: any) => {
           console.log(err);
@@ -47,8 +53,7 @@ export class HttpInterceptorService implements HttpInterceptor {
               this.router.navigate(['/']);
             }
           }
-        }
-        )
+        })
       );
     } else {
       console.log('interceptor without changes');
