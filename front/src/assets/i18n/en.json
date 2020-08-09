@@ -29,5 +29,10 @@
   "DIALOGYESNO": {
     "confirmado": "Yes",
     "cerraDialogo": "No"
+  },
+  "ACCESODIRECTO": {
+    "empleados": "Employees",
+    "jornadalaboral": "Workday",
+    "mensajes": "Messages"
   }
 }
