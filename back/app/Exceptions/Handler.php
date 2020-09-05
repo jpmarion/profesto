@@ -3,7 +3,13 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\UnauthorizedException;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +52,23 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ModelNotFoundException && $request->wantsJson()) {
+            return response()->json(['error' => 'Registro no encontrado'], 404);
+        }
+        if ($exception instanceof MethodNotAllowedException) {
+            return response()->json(['error' => 'Método no permitido'], 405);
+        }
+        if ($exception instanceof UnauthorizedException) {
+            return response()->json(['error' => 'Token no proporcionado'], 401);
+        }
+        if ($exception instanceof JWTException) {
+            return response()->json(['error' => $exception], 500);
+        }
+        if ($exception instanceof TokenExpiredException) {
+            return response()->json(['error' => 'Token expirado'], $exception->getStatusCode());
+        } else if ($exception instanceof TokenInvalidException) {
+            return response()->json(['error' => 'Token invalido'], $exception->getStatusCode());
+        }
         return parent::render($request, $exception);
     }
 }
